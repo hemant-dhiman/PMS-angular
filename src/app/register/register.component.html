@@ -1,0 +1,60 @@
+<h2>Registration</h2>
+<div>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit(registerForm.value)" >
+    <div class="form-group">
+      <label for="firstName">
+        First Name:
+        <input
+          type="text"
+          class="form-control"
+          id="firstName"
+          formControlName="firstName"
+        />
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label for="lastName">
+        Last Name:
+        <input
+          type="text"
+          class="form-control"
+          id="lastName"
+          formControlName="lastName"
+        />
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label for="userName">
+        User Name:
+        <input
+          type="text"
+          class="form-control"
+          id="userName"
+          formControlName="userName"
+        />
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label for="password">
+        Password Name:
+        <input
+          type="text"
+          class="form-control"
+          id="password"
+          formControlName="password"
+        />
+      </label>
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-success"
+      [disabled]="!registerForm.valid"
+    >
+      Submit
+    </button>
+  </form>
+</div>
