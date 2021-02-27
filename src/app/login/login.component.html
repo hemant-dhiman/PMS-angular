@@ -1,7 +1,7 @@
-<h2>Login</h2>
 <div>
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
     <div class="form-group">
+      <h2>Login</h2>
       <label for="userName">
         User Name:
         <input
@@ -13,6 +13,12 @@
         />
         <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
           <div *ngIf="f.userName.errors.required">User Name is required</div>
+          <div *ngIf="f.userName.errors.minlength">
+            User Name must be at least 5 characters
+          </div>
+          <div *ngIf="f.userName.errors.maxlength">
+            User Name must be less than 20 characters
+          </div>
         </div>
       </label>
     </div>

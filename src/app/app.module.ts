@@ -9,6 +9,12 @@ import { LoginComponent } from './login/login.component';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
+import { MockDataUsers } from "./users/mock-data-users";
+import { UsersService } from "./users";
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { HttpClientModule } from "@angular/common/http";
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,9 +25,13 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    HttpClientInMemoryWebApiModule.forRoot(MockDataUsers, {
+      dataEncapsulation: false,
+    }),
   ],
-  providers: [],
+  providers: [UsersService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

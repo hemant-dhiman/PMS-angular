@@ -1,31 +1,95 @@
-<h2>Registration</h2>
-<div>
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit(registerForm.value)" >
-    <div class="form-group">
-      <label for="firstName">
-        First Name:
+<div
+  style="
+    margin: auto;
+    width: 40%;
+    border: 3px solid grey;
+    padding: 10px;
+    background-color: cornsilk;
+  "
+>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit(registerForm.value)">
+    <div
+      class="form-group"
+      formGroupName="userDetails"
+      style="float: left; border: 1px solid white; margin: 10px; padding: 20px"
+    >
+      <h2>Registration</h2>
+      <label for="fullName">
+        Full Name:
         <input
           type="text"
           class="form-control"
-          id="firstName"
-          formControlName="firstName"
+          id="fullName"
+          formControlName="fullName"
+          [ngClass]="{
+            'is-invalid':
+              submitted && getUser.userDetails.controls['fullName'].errors
+          }"
         />
+        <div
+          *ngIf="submitted && getUser.userDetails.controls['fullName'].errors"
+          class="invalid-feedback"
+        >
+          <div
+            *ngIf="
+              getUser.userDetails.controls['fullName'].hasError('required')
+            "
+          >
+            Full Name is required
+          </div>
+          <div
+            *ngIf="
+              getUser.userDetails.controls['fullName'].hasError('minlength')
+            "
+          >
+            Full Name must be at least 5 characters
+          </div>
+          <div
+            *ngIf="
+              getUser.userDetails.controls['fullName'].hasError('maxlength')
+            "
+          >
+            Full Name must be less than 30 characters
+          </div>
+        </div>
       </label>
-    </div>
 
-    <div class="form-group">
-      <label for="lastName">
-        Last Name:
+      <br />
+
+      <label for="email">
+        Email:
         <input
           type="text"
           class="form-control"
-          id="lastName"
-          formControlName="lastName"
+          id="email"
+          formControlName="email"
+          [ngClass]="{
+            'is-invalid':
+              submitted && getUser.userDetails.controls['email'].errors
+          }"
         />
+        <div
+          *ngIf="submitted && getUser.userDetails.controls['email'].errors"
+          class="invalid-feedback"
+        >
+          <div
+            *ngIf="getUser.userDetails.controls['email'].hasError('required')"
+          >
+            Last Name is required
+          </div>
+        </div>
+        <div
+          *ngIf="
+            submitted && getUser.userDetails.controls['email'].hasError('email')
+          "
+          class="invalid-feedback"
+        >
+          Please Enter a Proper Email
+        </div>
       </label>
-    </div>
 
-    <div class="form-group">
+      <br />
+
       <label for="userName">
         User Name:
         <input
@@ -33,28 +97,218 @@
           class="form-control"
           id="userName"
           formControlName="userName"
+          [ngClass]="{
+            'is-invalid':
+              submitted && getUser.userDetails.controls['userName'].errors
+          }"
         />
+        <div
+          *ngIf="submitted && getUser.userDetails.controls['userName'].errors"
+          class="invalid-feedback"
+        >
+          <div
+            *ngIf="
+              getUser.userDetails.controls['userName'].hasError('required')
+            "
+          >
+            User Name is required
+          </div>
+          <div
+            *ngIf="
+              getUser.userDetails.controls['userName'].hasError('minlength')
+            "
+          >
+            User Name must be at least 5 characters
+          </div>
+          <div
+            *ngIf="
+              getUser.userDetails.controls['userName'].hasError('maxlength')
+            "
+          >
+            User Name must be less than 20 characters
+          </div>
+        </div>
       </label>
-    </div>
 
-    <div class="form-group">
+      <br />
+
       <label for="password">
-        Password Name:
+        Password:
         <input
-          type="text"
+          type="password"
           class="form-control"
           id="password"
           formControlName="password"
+          [ngClass]="{
+            'is-invalid':
+              submitted && getUser.userDetails.controls['password'].errors
+          }"
         />
+        <div
+          *ngIf="submitted && getUser.userDetails.controls['password'].errors"
+          class="invalid-feedback"
+        >
+          <div
+            *ngIf="
+              getUser.userDetails.controls['password'].hasError('required')
+            "
+          >
+            Password is required
+          </div>
+          <div
+            *ngIf="
+              getUser.userDetails.controls['password'].hasError('minlength')
+            "
+          >
+            Password must be at least 5 characters
+          </div>
+          <div
+            *ngIf="
+              getUser.userDetails.controls['password'].hasError('maxlength')
+            "
+          >
+            Password must be less than 20 characters
+          </div>
+        </div>
       </label>
     </div>
 
-    <button
-      type="submit"
-      class="btn btn-success"
-      [disabled]="!registerForm.valid"
+    <div
+      formGroupName="address"
+      style="float: left; border: 1px solid white; margin: 10px; padding: 20px"
     >
-      Submit
-    </button>
+      <h3>Address</h3>
+      <label for="line1">
+        Line1:
+        <input
+          type="text"
+          class="form-control"
+          id="line1"
+          formControlName="line1"
+          [ngClass]="{
+            'is-invalid':
+              submitted && getAddress.address.controls['line1'].errors
+          }"
+        />
+        <div
+          *ngIf="submitted && getAddress.address.controls['line1'].errors"
+          class="invalid-feedback"
+        >
+          <div
+            *ngIf="getAddress.address.controls['line1'].hasError('required')"
+          >
+            Line One is required
+          </div>
+        </div>
+      </label>
+
+      <br />
+
+      <label for="line2">
+        Line2:
+        <input
+          type="text"
+          class="form-control"
+          id="line2"
+          formControlName="line2"
+          [ngClass]="{
+            'is-invalid':
+              submitted && getAddress.address.controls['line2'].errors
+          }"
+        />
+        <div
+          *ngIf="submitted && getAddress.address.controls['line2'].errors"
+          class="invalid-feedback"
+        >
+          <div
+            *ngIf="getAddress.address.controls['line2'].hasError('required')"
+          >
+            Line Two is required
+          </div>
+        </div>
+      </label>
+
+      <br />
+
+      <label for="district">
+        District:
+        <input
+          type="text"
+          class="form-control"
+          id="district"
+          formControlName="district"
+          [ngClass]="{
+            'is-invalid':
+              submitted && getAddress.address.controls['district'].errors
+          }"
+        />
+        <div
+          *ngIf="submitted && getAddress.address.controls['district'].errors"
+          class="invalid-feedback"
+        >
+          <div
+            *ngIf="getAddress.address.controls['district'].hasError('required')"
+          >
+            District is required
+          </div>
+        </div>
+      </label>
+
+      <br />
+
+      <label for="state">
+        State:
+        <input
+          type="text"
+          class="form-control"
+          id="state"
+          formControlName="state"
+          [ngClass]="{
+            'is-invalid':
+              submitted && getAddress.address.controls['state'].errors
+          }"
+        />
+        <div
+          *ngIf="submitted && getAddress.address.controls['state'].errors"
+          class="invalid-feedback"
+        >
+          <div
+            *ngIf="getAddress.address.controls['state'].hasError('required')"
+          >
+            State is required
+          </div>
+        </div>
+      </label>
+
+      <br />
+
+      <label for="pinCode">
+        Pin Code:
+        <input
+          type="text"
+          class="form-control"
+          id="pinCode"
+          formControlName="pinCode"
+          [ngClass]="{
+            'is-invalid':
+              submitted && getAddress.address.controls['pinCode'].errors
+          }"
+        />
+        <div
+          *ngIf="submitted && getAddress.address.controls['pinCode'].errors"
+          class="invalid-feedback"
+        >
+          <div
+            *ngIf="getAddress.address.controls['pinCode'].hasError('required')"
+          >
+            Line Two is required
+          </div>
+        </div>
+      </label>
+    </div>
+
+    <div style="width: min-content; margin: auto; width: 50%; padding: 10px">
+      <button type="submit" class="btn btn-success">Submit</button>
+    </div>
   </form>
 </div>
