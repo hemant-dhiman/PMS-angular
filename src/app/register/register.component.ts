@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  Validators,
+  FormBuilder,
+} from '@angular/forms';
+import { Router } from '@angular/router';
+import { first } from 'rxjs/operators';
+import { UsersService } from '../users';
+import { AlertService } from '../users/alert.service';
 import { users } from '../users/users';
 
 @Component({
@@ -8,59 +16,115 @@ import { users } from '../users/users';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
+  constructor(
+    private usersService: UsersService,
+    private formBuilder: FormBuilder,
+    private alertService: AlertService,
+    private router: Router,
+  ) {}
+
+  data: users[];
   submitted = false;
-  registerForm: FormGroup | any;
+  loading = false;
+  registerForm: FormGroup;
 
   get getUser() {
-    return this.registerForm.controls;
-  }
-
-  get getAddress(){
     return this.registerForm['controls'];
   }
 
-  constructor() {}
-
-  data!: string[];
-  onSubmit(user: users){
-    this.submitted = true;
-    console.log(this.getUser);
-    console.log(user);
+  get getAddress() {
+    return this.registerForm.controls.address['controls'];
   }
 
-  ngOnInit(): void {
-    this.registerForm = new FormGroup({
+  onSubmit(user: users) {
+    this.submitted = true;
 
-      userDetails: new FormGroup({
-        fullName: new FormControl('', [
+    let newUser: users = {
+      id: user.id,
+      fullName: user.fullName,
+      userName: user.userName,
+      email: user.email,
+      password: user.password,
+      address: user.address,
+    };
+    
+    //console.log(this.registerForm.value);
+    this.loading = true;
+    this.usersService.register(this.registerForm.value)
+    .pipe(first())
+    .subscribe(
+      data => {
+        this.alertService.success('Registration successful', true);
+        this.router.navigate(['/login']);
+      },
+      err => {
+        this.alertService.error(err);
+        this.loading = false;
+      });
+    
+    }
+
+
+    // if (this.registerForm.valid) this.usersService.addUser(newUser).subscribe();
+    // else console.log('please check all the entered value!');
+
+    // this.usersService.getUsers().subscribe(
+    //   a=> this.data = a
+    // );
+
+    // if (this.data != undefined && (this.data.length> 0))
+    // localStorage.setItem('users', JSON.stringify(this.data));
+    // //this.usersService.getUsers().subscribe(console.log);
+    // console.log(this.data)
+    // console.log("local storage!")
+  //}
+
+  ngOnInit(): void {
+    this.registerForm = this.formBuilder.group({
+      //userDetails: new FormGroup({
+      fullName: [
+        '',
+        [
           Validators.required,
           Validators.minLength(5),
           Validators.maxLength(30),
-        ]),
-        userName: new FormControl('', [
+        ],
+      ],
+      userName: [
+        '',
+        [
           Validators.required,
           Validators.minLength(5),
           Validators.maxLength(25),
-        ]),
-        password: new FormControl('', [
+        ],
+      ],
+      password: [
+        '',
+        [
           Validators.required,
           Validators.minLength(5),
           Validators.maxLength(20),
-        ]),
-        email: new FormControl('', [
-          Validators.required,
-          Validators.email,
-        ]),
+        ],
+      ],
+      email: ['', [Validators.required, Validators.email]],
+      //}),
+
+      address: this.formBuilder.group({
+        line1: ['', Validators.required],
+        line2: ['', Validators.required],
+        district: ['', Validators.required],
+        state: ['', Validators.required],
+        pinCode: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(6),
+            Validators.maxLength(6),
+          ],
+        ],
       }),
 
-      address: new FormGroup({
-        line1: new FormControl('', Validators.required),
-        line2: new FormControl('', Validators.required),
-        district: new FormControl('', Validators.required),
-        state: new FormControl('', Validators.required),
-        pinCode: new FormControl('', Validators.required)
-      })
-      
     });
+
   }
 }
