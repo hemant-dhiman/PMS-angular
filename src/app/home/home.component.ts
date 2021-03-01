@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
   ) {
     //this.usersService.getAll().subscribe(console.log);
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    
   }
 
   logout() {
@@ -38,5 +39,8 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if(this.currentUser === null)
+    this.router.navigate(['/login'])
+  }
 }

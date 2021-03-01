@@ -31,6 +31,10 @@ export class UserUpdateComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.getUser['userName']);
+    this.submitted = true;
+    this.loading = true;
+    if(this.updateForm.valid){
     this.usersService
       .update(this.updateForm.value)
       .pipe(first())
@@ -44,13 +48,16 @@ export class UserUpdateComponent implements OnInit {
           this.loading = false;
         }
       );
+    }
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    //console.log(currentUser.id);
+    if(currentUser === null){
+      this.router.navigate(['/login'])
+    }
+
     this.updateForm = this.formBuilder.group({
-      //userDetails: new FormGroup({
       id: [currentUser.id],
       fullName: [
         '',
@@ -60,6 +67,7 @@ export class UserUpdateComponent implements OnInit {
           Validators.maxLength(30),
         ],
       ],
+      //{value: 'Nancy', disabled: true}
       userName: [currentUser.userName],
       password: [
         '',
@@ -87,5 +95,7 @@ export class UserUpdateComponent implements OnInit {
         ],
       }),
     });
+    //this.getUser['userName'].disable();
+
   }
 }

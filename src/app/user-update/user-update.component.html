@@ -1,11 +1,11 @@
-<h1 style="text-align: center;" >Registration</h1>
+<h1 style="text-align: center;" >Update User Details</h1>
 <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
   <div
   class="form-group"
   style="float: left; border: 1px solid white; margin: 10px; padding: 20px"
   >
-  <h3>User Details</h3>
-    
+  <div style=" float:left; border: 1px solid white; margin: 10px; padding: 20px">
+    <h3>User Details</h3>
   <!--full name control-->
   <div class="form-group">
   <label for="fullName">
@@ -34,12 +34,13 @@
   </label>
   </div>
 
-  <!-- user name control
-  <div class="form-group">
+  <!-- user name control -->
+  <div class="form-group" [hidden]='true'>
   <label for="userName">
     User Name:
     <input
       type="text"
+      
       formControlName="userName"
       id="userName"
       class="form-control"
@@ -60,7 +61,7 @@
       </div>
     </div>
   </label>
-  </div> -->
+  </div>
 
   <!--password control-->
   <div class="form-group">
@@ -114,13 +115,13 @@
       </div>
     </label>
     </div>
-  </div>
-
+ 
+</div>
 
 
 
   <!--Address controls-->
-  <div formGroupName="address" class="form-group" >
+  <div formGroupName="address" class="form-group" style=" float:left; border: 1px solid white; margin: 10px; padding: 20px" >
     <h3>Address</h3>
     <!--line 1-->
     <div class="form-group">
@@ -241,7 +242,13 @@
       </label>
       </div>
     </div>
-  <button type="submit" class="btn btn-success">Update</button>
+  
+    <div>
+
+      <button type="submit" class="btn btn-success">Update</button>
+    </div>
+
+</div>
 </form>
 
 

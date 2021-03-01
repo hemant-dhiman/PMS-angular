@@ -37,8 +37,10 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(user: users) {
+
     this.submitted = true;
     this.loading = true;
+    if(this.registerForm.valid){
     this.usersService.register(this.registerForm.value)
     .pipe(first())
     .subscribe(
@@ -50,7 +52,7 @@ export class RegisterComponent implements OnInit {
         this.alertService.error(err);
         this.loading = false;
       });
-    
+    }
     }
 
 
