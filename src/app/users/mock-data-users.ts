@@ -1,15 +1,18 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { users } from './users';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MockDataUsers implements InMemoryDbService {
-  user1: users;
+export class MockDataUsers implements OnInit{
+  ngOnInit(): void {
+    localStorage.setItem('users',JSON.stringify(this.users));
+  }
 
-  createDb() {
-     const users = [
+   constructor(){}
+
+      users = [
       {
         id: 0,
         fullName: 'Hemant Dhiman',
@@ -39,12 +42,6 @@ export class MockDataUsers implements InMemoryDbService {
           pinCode: '144411',
         },
       },
-    ];
-    return { users };
-  }
-
-  genId(user: users[]) {
-    return user.length > 0 ? Math.max(...user.map((user) => user.id)) + 1 : 100;
-  }
+    ]
 
 }

@@ -8,14 +8,14 @@ import {
 } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, dematerialize, materialize, mergeMap } from 'rxjs/operators';
+import { users } from './users';
 
 @Injectable()
 export class BackEnd implements HttpInterceptor {
+    currentUser: users;
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        let users: any[] = JSON.parse(localStorage.getItem('users'))||[];
+        let users: users[] = JSON.parse(localStorage.getItem('users'))||[];
         return of(null).pipe(mergeMap(()=>{
-            console.log(request.body);
-            
             //authentication for existing users
             if (request.url.endsWith('/users/authenticate') && request.method === 'POST'){
                 
@@ -30,19 +30,21 @@ export class BackEnd implements HttpInterceptor {
                         fullName: user.fullName,
                         email: user.email,
                         userName: user.userName,
-                        token: 'jwt-token'
+                        address: user.address,
+                        token: '12345-6789-1011'
                     };
                     return of(new HttpResponse({status: 200, body: body}));
                 }else{
                     return throwError({
-                        error:{message: 'userName or password is incorrect'}
+                        error:{message: 'Username or Password is incorrect'}
                     });
                 }
             }
             
             //get all users
             if(request.url.endsWith('/users') && request.method === 'GET'){
-                if (request.headers.get('Authorization') === 'Bearer jwt-token'){
+                console.log(request.headers)
+                if (request.headers.get('Authorization') === 'Bearer 12345-6789-1011'){
                     return of(new HttpResponse({status: 200, body: users}));
                 }else{
                     return throwError({status: 401, error: {message:'Unauthorized'}});
@@ -50,8 +52,11 @@ export class BackEnd implements HttpInterceptor {
             }
 
             // get user by id
+            
             if (request.url.match(/\/users\/\d+$/) && request.method === 'GET'){
-                if(request.headers.get('Authorization') === 'Bearer jwt-token'){
+            console.log(request.params);
+
+                if(request.headers.get('Authorization') === 'Bearer 12345-6789-1011'){
 
                     let urlParts = request.url.split('/');
                     let id = parseInt(urlParts[urlParts.length - 1]);
@@ -77,23 +82,53 @@ export class BackEnd implements HttpInterceptor {
                 
                 if(duplicateUser){
                     return throwError({
-                        error:{ message: 'userName "' + newUser.userName + '" is already taken' }
+                        error:{ message: 'Username "' + newUser.userName + '" is Already Taken' }
                     });
                 }
                 
                 //else save new user
                 
                 newUser.id = users.length+1;
-                console.log(newUser)
                 users.push(newUser);
                 localStorage.setItem('users', JSON.stringify(users));
 
                 return of(new HttpResponse({status: 200}));
             }
 
+            //update a user
+            if(request.url.match(/\/users\/\d+$/) && request.method === 'PATCH'){
+                let newUser = request.body;
+                this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                //newUser.userName = this.currentUser.userName;
+                console.log(newUser);
+                console.log(this.currentUser);
+
+                for (let index = 0; index < users.length; index++) {
+                    const element = users[index];
+                    if(element.userName == newUser.userName){
+                        users.splice(index,1);
+                        break;
+                    }    
+                }
+
+                if(this.currentUser.userName === newUser.userName){
+                newUser.id = this.currentUser.id;
+                console.log(newUser)
+                localStorage.removeItem('currentUser');
+                users.push(newUser);
+                localStorage.setItem('users', JSON.stringify(users));
+                return of(new HttpResponse({status: 200}));  
+                }
+
+                return throwError({
+                    error:{ message: 'Username "' + newUser.userName + ` Doesn't Exist!` }
+                });
+
+            }
+
             //delete a user
             if (request.url.match(/\/users\/\d+$/) && request.method === 'DELETE'){
-                if (request.headers.get('Authorization') === 'jwt-token'){
+                if (request.headers.get('Authorization') === '12345-6789-1011'){
                     let urlParts = request.url.split('/');
                     let id = parseInt(urlParts[urlParts.length - 1]);
                     for(let i = 0; i< users.length; i++){
@@ -109,6 +144,9 @@ export class BackEnd implements HttpInterceptor {
                     return throwError({status: 401, error: {message: 'Unauthorized'}});
                 }
             }
+
+            
+
             return next.handle(request);
         })).pipe(materialize())
         .pipe(delay(500))

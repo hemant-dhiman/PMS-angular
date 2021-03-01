@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { users } from './users';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
@@ -22,12 +22,12 @@ export class UsersService {
   }
 
   register(user: users){
-    console.log(user);
+    //console.log(user);
     return this.http.post(`/users/register`, user);
   }
 
   update(user:users){
-    return this.http.put(`/users/` + user.id, user);
+    return this.http.patch(`/users/` + user.id, user);
   }
 
   delete(id: number){
@@ -45,8 +45,9 @@ export class UsersService {
     }));
   }
 
-  logout(){
+  logout(): Observable<any>{
     localStorage.removeItem('currentUser');
+    return of(new HttpResponse({status: 200}));
   }
 
 

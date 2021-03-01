@@ -20,6 +20,7 @@ import { HomeComponent } from './home/home.component';
 import { AlertComponent } from './directives/alert.component';
 import { AuthGuard } from './auth/auth.guard';
 import { JwtInterceptor } from './users/jwt.interceptor';
+import { UserUpdateComponent } from './user-update/user-update.component';
 
 @NgModule({
   declarations: [
@@ -30,30 +31,31 @@ import { JwtInterceptor } from './users/jwt.interceptor';
     PetEntryComponent,
     HomeComponent,
     AlertComponent,
+    UserUpdateComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(MockDataUsers, {
-      dataEncapsulation: false,
-    }),
+    // HttpClientInMemoryWebApiModule.forRoot(MockDataUsers, {
+    //   dataEncapsulation: false,
+    // }),
   ],
   providers: [
     AlertService,
     UsersService,
-    AuthGuard,
+    AuthGuard,{
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true,
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: BackEnd,
       multi: true,
     },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: JwtInterceptor,
-      multi: true,
-    },
+    
   ],
   bootstrap: [AppComponent],
 })

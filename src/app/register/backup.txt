@@ -1,80 +1,105 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { users } from '../users/users';
-import { UsersService } from "../users";
+// import { Component, OnInit } from '@angular/core';
+// import { FormGroup, FormControl, Validators } from '@angular/forms';
+// import { users } from '../users/users';
+// import { UsersService } from '../users';
 
-@Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
-})
-export class RegisterComponent implements OnInit {
-  constructor(private usersService: UsersService) {}
-  submitted = false;
-  users_data!: users[];
-  registerForm: FormGroup | any;
+// @Component({
+//   selector: 'app-register',
+//   templateUrl: './register.component.html',
+//   styleUrls: ['./register.component.scss'],
+// })
+// export class RegisterComponent implements OnInit {
+//   constructor(private usersService: UsersService) {}
+//   submitted = false;
+//   users_data!: users[];
+//   registerForm: FormGroup | any;
 
-  get getUser() {
-    return this.registerForm.controls;
-  }
+//   get getUser() {
+//     return this.registerForm.controls;
+//   }
 
-  get getAddress(){
-    return this.registerForm['controls'];
-  }
+//   get getAddress() {
+//     return this.registerForm['controls'];
+//   }
+
+//   data!: string[];
+//   onSubmit(user: users) {
+//     this.submitted = true;
+//     console.log(user);
+
+//     let newUser = {
+//       id: user.id,
+//       fullName: user.fullName,
+//       userName: user.userName,
+//       email: user.email,
+//       password: user.password,
+//       address: user.address,
+//     };
+//     console.log(newUser);
+//     this.usersService.addUser(newUser).subscribe();
+//   }
+
+//   ngOnInit(): void {
+//     console.log(this.getUser);
+//     this.registerForm = new FormGroup({
+//       //userDetails: new FormGroup({
+//       fullName: new FormControl('', [
+//         Validators.required,
+//         Validators.minLength(5),
+//         Validators.maxLength(30),
+//       ]),
+//       userName: new FormControl('', [
+//         Validators.required,
+//         Validators.minLength(5),
+//         Validators.maxLength(25),
+//       ]),
+//       password: new FormControl('', [
+//         Validators.required,
+//         Validators.minLength(5),
+//         Validators.maxLength(20),
+//       ]),
+//       email: new FormControl('', [Validators.required, Validators.email]),
+//       //}),
+
+//       address: new FormGroup({
+//         line1: new FormControl('', Validators.required),
+//         line2: new FormControl('', Validators.required),
+//         district: new FormControl('', Validators.required),
+//         state: new FormControl('', Validators.required),
+//         pinCode: new FormControl('', Validators.required),
+//       }),
+//     });
+//   }
+// }
 
 
-  data!: string[];
-  onSubmit(user: users){
-    this.submitted = true;
-    console.log(user);
-
-    let newUser = {
-      id: user.id,
-      fullName: user.fullName,
-      userName: user.userName,
-      email: user.email,
-      password: user.password,
-      address: user.address
-    }
-    console.log(newUser);
-    this.usersService.addUser(newUser).subscribe();
-
-  }
-
-  ngOnInit(): void {
-    console.log(this.getUser);
-    this.registerForm = new FormGroup({
-
-      //userDetails: new FormGroup({
-        fullName: new FormControl('', [
-          Validators.required,
-          Validators.minLength(5),
-          Validators.maxLength(30),
-        ]),
-        userName: new FormControl('', [
-          Validators.required,
-          Validators.minLength(5),
-          Validators.maxLength(25),
-        ]),
-        password: new FormControl('', [
-          Validators.required,
-          Validators.minLength(5),
-          Validators.maxLength(20),
-        ]),
-        email: new FormControl('', [
-          Validators.required,
-          Validators.email,
-        ]),
-      //}),
-
-      address: new FormGroup({
-        line1: new FormControl('', Validators.required),
-        line2: new FormControl('', Validators.required),
-        district: new FormControl('', Validators.required),
-        state: new FormControl('', Validators.required),
-        pinCode: new FormControl('', Validators.required)
-      })
-      
-    });
-  }
-}
+// [
+//   {
+//     id: 1,
+//     fullName: 'Shiva Tomar',
+//     userName: 'shiva',
+//     email: 'shiva@datability.co',
+//     password: '123456',
+//     address: {
+//       line1: 'partap bhawan',
+//       line2: 'near Rani Taal',
+//       district: 'gaziabad',
+//       state: 'uttar pradesh',
+//       pinCode: '144411',
+//     },
+//   },
+//   {
+//     id: 0,
+//     fullName: 'Hemant Dhiman',
+//     userName: 'HD1234',
+//     password: '123456789',
+//     email: 'khushalifatehpuria24@gmail.com',
+//     address: {
+//       line1: 'line one',
+//       line2: 'line two',
+//       district: 'sirmaur',
+//       state: 'Himachal Pradesh',
+//       pinCode: '173001',
+//     },
+//   },
+// ];

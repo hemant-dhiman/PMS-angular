@@ -38,17 +38,6 @@ export class RegisterComponent implements OnInit {
 
   onSubmit(user: users) {
     this.submitted = true;
-
-    let newUser: users = {
-      id: user.id,
-      fullName: user.fullName,
-      userName: user.userName,
-      email: user.email,
-      password: user.password,
-      address: user.address,
-    };
-    
-    //console.log(this.registerForm.value);
     this.loading = true;
     this.usersService.register(this.registerForm.value)
     .pipe(first())

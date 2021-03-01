@@ -19,7 +19,11 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private alert: AlertService,
-    ) {}
+    ) {
+
+      
+
+    }
   submitted = false;
   loading = false;
   loginForm!: FormGroup;
@@ -40,7 +44,7 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     this.usersService.login(this.f.userName['value'], this.f.password['value'])
     .pipe(first()).subscribe(data => {
-      this.router.navigate(['/pet-entry']);
+      this.router.navigate(['/home']);
     },
      error => {
        this.alert.error(error);
