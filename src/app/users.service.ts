@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { users } from './users';
+import { Users } from './users/Users';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -14,19 +14,19 @@ export class UsersService {
   constructor(private http: HttpClient) {}
 
   getAll(){
-    return this.http.get<users[]>(`/users`);
+    return this.http.get<Users[]>(`/users`);
   }
 
   getById(id: number){
     return this.http.get(`/users/` + id);
   }
 
-  register(user: users){
+  register(user: Users){
     //console.log(user);
     return this.http.post(`/users/register`, user);
   }
 
-  update(user:users){
+  update(user:Users){
     return this.http.patch(`/users/` + user.id, user);
   }
 

@@ -8,13 +8,13 @@ import {
 } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, dematerialize, materialize, mergeMap } from 'rxjs/operators';
-import { users } from './users';
+import { Users } from '../users/Users';
 
 @Injectable()
 export class BackEnd implements HttpInterceptor {
-    currentUser: users;
+    currentUser: Users;
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        let users: users[] = JSON.parse(localStorage.getItem('users'))||[];
+        let users: Users[] = JSON.parse(localStorage.getItem('users'))||[];
         return of(null).pipe(mergeMap(()=>{
             //authentication for existing users
             if (request.url.endsWith('/users/authenticate') && request.method === 'POST'){

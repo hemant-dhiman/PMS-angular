@@ -1,51 +1,42 @@
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RegisterComponent } from './register/register.component';
-import { LoginComponent } from './login/login.component';
 
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
-import { MockDataUsers } from './users/mock-data-users';
-import { UsersService } from './users';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { AlertComponent } from './alert/alert.component';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { PetEntryComponent } from './pet-entry/pet-entry.component';
-import { BackEnd } from './users/backend';
-import { AlertService } from './users/alert.service';
-import { HomeComponent } from './home/home.component';
-import { AlertComponent } from './directives/alert.component';
-import { AuthGuard } from './auth/auth.guard';
-import { JwtInterceptor } from './users/jwt.interceptor';
-import { UserUpdateComponent } from './user-update/user-update.component';
+import { AlertService } from './alert.service';
+import { UsersService } from './users.service';
+import { AuthGuard } from './auth.guard';
+import { BackEnd } from './Backend/backend';
+import { JwtInterceptor } from './Backend/jwt.interceptor';
+import { LoginModule } from './login/login.module';
+import { RegisterModule } from './register/register.module';
+import { PetEntryModule } from './pet-entry/pet-entry.module';
+import { HomeModule } from './home/home.module';
+import { UserUpdateModule } from './user-update/user-update.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    RegisterComponent,
-    LoginComponent,
-    PageNotFoundComponent,
-    PetEntryComponent,
-    HomeComponent,
-    AlertComponent,
-    UserUpdateComponent,
-  ],
+  declarations: [AppComponent, AlertComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    // HttpClientInMemoryWebApiModule.forRoot(MockDataUsers, {
-    //   dataEncapsulation: false,
-    // }),
+    LoginModule,
+    RegisterModule,
+    PetEntryModule,
+    HomeModule,
+    UserUpdateModule,
+    //AlertModule,
   ],
   providers: [
     AlertService,
     UsersService,
-    AuthGuard,{
+    AuthGuard,
+    {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
       multi: true,
@@ -55,7 +46,6 @@ import { UserUpdateComponent } from './user-update/user-update.component';
       useClass: BackEnd,
       multi: true,
     },
-    
   ],
   bootstrap: [AppComponent],
 })

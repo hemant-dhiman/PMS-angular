@@ -1,4 +1,4 @@
-export interface pets{
+export interface Pets{
     /*
       ownerId
       petId

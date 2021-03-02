@@ -1,5 +1,5 @@
-import { address } from './address';
-export interface users {
+import { Address } from './address';
+export interface Users {
   /**
    * Full name
    * Username
@@ -12,5 +12,5 @@ export interface users {
   userName: string;
   email: string;
   password: string;
-  address: address;
+  address: Address;
 }

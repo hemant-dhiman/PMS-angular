@@ -2,10 +2,10 @@ import { Route } from '@angular/compiler/src/core';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
-import { AlertComponent } from '../directives/alert.component';
-import { AlertService } from '../users/alert.service';
-import { users } from '../users/users';
-import { UsersService } from '../users/users.service';
+import { AlertComponent } from '../alert/alert.component';
+import { AlertService } from '../alert.service';
+import { Users } from '../users/Users';
+import { UsersService } from '../users.service';
 
 @Component({
   selector: 'app-home',
@@ -13,8 +13,8 @@ import { UsersService } from '../users/users.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  currentUser: users;
-  users: users[];
+  currentUser: Users;
+  users: Users[];
 
   constructor(
     private usersService: UsersService,

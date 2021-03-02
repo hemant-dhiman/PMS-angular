@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { UsersService } from "../users";
-import { users } from '../users/users';
+import { UsersService } from "../users.service";
+import { Users } from '../Users/Users';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
-import { AlertService } from '../users/alert.service';
+import { AlertService } from '../alert.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +12,7 @@ import { AlertService } from '../users/alert.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  users_data!: users[];
+  users_data!: Users[];
   returnUrl: String;
   constructor(
     private usersService: UsersService, 

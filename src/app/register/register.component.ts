@@ -6,9 +6,9 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
-import { UsersService } from '../users';
-import { AlertService } from '../users/alert.service';
-import { users } from '../users/users';
+import { UsersService } from '../users.service';
+import { AlertService } from '../alert.service';
+import { Users } from '../users/users';
 
 @Component({
   selector: 'app-register',
@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
     private router: Router,
   ) {}
 
-  data: users[];
+  data: Users[];
   submitted = false;
   loading = false;
   registerForm: FormGroup;
@@ -36,7 +36,7 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.controls.address['controls'];
   }
 
-  onSubmit(user: users) {
+  onSubmit(user: Users) {
 
     this.submitted = true;
     this.loading = true;
