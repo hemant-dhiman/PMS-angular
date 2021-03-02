@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-
 import { AlertComponent } from './alert/alert.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -17,6 +16,9 @@ import { RegisterModule } from './register/register.module';
 import { PetEntryModule } from './pet-entry/pet-entry.module';
 import { HomeModule } from './home/home.module';
 import { UserUpdateModule } from './user-update/user-update.module';
+import { TestComponentModule } from './test-component/test-component.module';
+import { RouterOutlet } from '@angular/router';
+import { LoginGuard } from './login.guard';
 
 @NgModule({
   declarations: [AppComponent, AlertComponent],
@@ -30,11 +32,13 @@ import { UserUpdateModule } from './user-update/user-update.module';
     PetEntryModule,
     HomeModule,
     UserUpdateModule,
+    TestComponentModule,
     //AlertModule,
   ],
   providers: [
     AlertService,
     UsersService,
+    LoginGuard,
     AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
