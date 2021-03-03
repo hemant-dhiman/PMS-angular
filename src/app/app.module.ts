@@ -17,7 +17,6 @@ import { PetEntryModule } from './pet-entry/pet-entry.module';
 import { HomeModule } from './home/home.module';
 import { UserUpdateModule } from './user-update/user-update.module';
 import { TestComponentModule } from './test-component/test-component.module';
-import { RouterOutlet } from '@angular/router';
 import { LoginGuard } from './login.guard';
 
 @NgModule({

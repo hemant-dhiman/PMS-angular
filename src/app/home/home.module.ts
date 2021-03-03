@@ -4,21 +4,17 @@ import { HomeComponent } from './home.component';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
-
-
 @NgModule({
-  declarations: [
-    HomeComponent
-  ],
+  declarations: [HomeComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     RouterModule.forChild([
       {
-        path:'',
+        path: '',
         component: HomeComponent,
-      }
-    ])
-  ]
+      },
+    ]),
+  ],
 })
-export class HomeModule { }
+export class HomeModule {}

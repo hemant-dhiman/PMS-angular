@@ -19,28 +19,29 @@ export class HomeComponent implements OnInit {
   constructor(
     private usersService: UsersService,
     private alertService: AlertService,
-    private router: Router,
+    private router: Router
   ) {
     //this.usersService.getAll().subscribe(console.log);
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    
+  }
+
+  ngOnInit(): void {
+    if (this.currentUser === null) this.router.navigate(['/login']);
   }
 
   logout() {
     //localStorage.removeItem('currentUser');
-    this.usersService.logout().pipe(first())
-    .subscribe(
-      data => {
-        this.alertService.success('Logout successful', true);
-        this.router.navigate(['/login']);
-      },
-      err => {
-        this.alertService.error(err);
-      });
-  }
-
-  ngOnInit(): void {
-    if(this.currentUser === null)
-    this.router.navigate(['/login'])
+    this.usersService
+      .logout()
+      .pipe(first())
+      .subscribe(
+        (data) => {
+          this.alertService.success('Logout successful', true);
+          this.router.navigate(['/login']);
+        },
+        (err) => {
+          this.alertService.error(err);
+        }
+      );
   }
 }

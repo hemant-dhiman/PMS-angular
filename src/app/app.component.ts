@@ -3,9 +3,10 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  title = 'PMS';
   ngOnInit(): void {
     const users = [
       {
@@ -37,9 +38,8 @@ export class AppComponent implements OnInit {
           pinCode: '144411',
         },
       },
-    ]
+    ];
 
-    localStorage.setItem('users',JSON.stringify(users));
+    localStorage.setItem('users', JSON.stringify(users));
   }
-  title = 'PMS';
 }

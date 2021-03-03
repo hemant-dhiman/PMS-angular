@@ -1,10 +1,12 @@
 <h1 style="text-align: center">Registration</h1>
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit(registerForm.value)">
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
   <div
     class="form-group"
     style="float: left; border: 1px solid white; margin: 10px; padding: 20px"
   >
-    <div style=" float:left; border: 1px solid white; margin: 10px; padding: 20px">
+    <div
+      style="float: left; border: 1px solid white; margin: 10px; padding: 20px"
+    >
       <h3>User Details</h3>
       <!--full name control-->
       <div class="form-group">
@@ -123,7 +125,11 @@
     </div>
 
     <!--Address controls-->
-    <div formGroupName="address" class="form-group" style=" float:left; border: 1px solid white; margin: 10px; padding: 20px">
+    <div
+      formGroupName="address"
+      class="form-group"
+      style="float: left; border: 1px solid white; margin: 10px; padding: 20px"
+    >
       <h3>Address</h3>
       <!--line 1-->
       <div class="form-group">

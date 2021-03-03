@@ -13,59 +13,47 @@ export class UsersService {
 
   constructor(private http: HttpClient) {}
 
-  getAll(){
+  getAll() {
     return this.http.get<Users[]>(`/users`);
   }
 
-  getById(id: number){
+  getById(id: number) {
     return this.http.get(`/users/` + id);
   }
 
-  register(user: Users){
+  register(user: Users) {
     //console.log(user);
     return this.http.post(`/users/register`, user);
   }
 
-  update(user:Users){
+  update(user: Users) {
     return this.http.patch(`/users/` + user.id, user);
   }
 
-  delete(id: number){
+  delete(id: number) {
     return this.http.delete(`/users/` + id);
   }
 
-
-  login(userName:string, password:string){
-    return this.http.post<any>(`/users/authenticate`, { userName: userName, password: password })
-    .pipe(map(user => {
-      if (user && user.token){
-        localStorage.setItem('currentUser', JSON.stringify(user));
-      }
-      return user;
-    }));
+  login(userName: string, password: string) {
+    return this.http
+      .post<any>(`/users/authenticate`, {
+        userName: userName,
+        password: password,
+      })
+      .pipe(
+        map((user) => {
+          if (user && user.token) {
+            localStorage.setItem('currentUser', JSON.stringify(user));
+          }
+          return user;
+        })
+      );
   }
 
-  logout(): Observable<any>{
+  logout(): Observable<any> {
     localStorage.removeItem('currentUser');
-    return of(new HttpResponse({status: 200}));
+    return of(new HttpResponse({ status: 200 }));
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   // httpOptions = {
   //   headers: new HttpHeaders({
@@ -106,5 +94,4 @@ export class UsersService {
   // logOut(){
   //   localStorage.removeItem('currentUser');
   // }
-
 }

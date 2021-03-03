@@ -11,13 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-update.component.scss'],
 })
 export class UserUpdateComponent implements OnInit {
-  constructor(
-    private usersService: UsersService,
-    private formBuilder: FormBuilder,
-    private alertService: AlertService,
-    private router: Router
-  ) {}
-
+  
   submitted = false;
   loading = false;
   updateForm: FormGroup;
@@ -30,32 +24,18 @@ export class UserUpdateComponent implements OnInit {
     return this.updateForm.controls.address['controls'];
   }
 
-  onSubmit() {
-    console.log(this.getUser['userName']);
-    this.submitted = true;
-    this.loading = true;
-    if(this.updateForm.valid){
-    this.usersService
-      .update(this.updateForm.value)
-      .pipe(first())
-      .subscribe(
-        (data) => {
-          this.alertService.success('Update successful', true);
-          this.router.navigate(['/login']);
-        },
-        (err) => {
-          this.alertService.error(err);
-          this.loading = false;
-        }
-      );
-    }
-  }
+  constructor(
+    private usersService: UsersService,
+    private formBuilder: FormBuilder,
+    private alertService: AlertService,
+    private router: Router
+  ) {}
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    if(currentUser === null){
-      this.router.navigate(['/login'])
-    }
+    //if(currentUser === null){
+    //  this.router.navigate(['/login'])
+    //}
 
     this.updateForm = this.formBuilder.group({
       id: [currentUser.id],
@@ -67,7 +47,6 @@ export class UserUpdateComponent implements OnInit {
           Validators.maxLength(30),
         ],
       ],
-      //{value: 'Nancy', disabled: true}
       userName: [currentUser.userName],
       password: [
         '',
@@ -78,7 +57,6 @@ export class UserUpdateComponent implements OnInit {
         ],
       ],
       email: ['', [Validators.required, Validators.email]],
-      //}),
 
       address: this.formBuilder.group({
         line1: ['', Validators.required],
@@ -95,7 +73,27 @@ export class UserUpdateComponent implements OnInit {
         ],
       }),
     });
-    //this.getUser['userName'].disable();
+  }
 
+
+  onSubmit() {
+    console.log(this.getUser['userName']);
+    this.submitted = true;
+    this.loading = true;
+    if (this.updateForm.valid) {
+      this.usersService
+        .update(this.updateForm.value)
+        .pipe(first())
+        .subscribe(
+          (data) => {
+            this.alertService.success('Update successful', true);
+            this.router.navigate(['/login']);
+          },
+          (err) => {
+            this.alertService.error(err);
+            this.loading = false;
+          }
+        );
+    }
   }
 }

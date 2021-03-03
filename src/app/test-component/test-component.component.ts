@@ -15,7 +15,6 @@ import { delay, map } from 'rxjs/operators';
   templateUrl: './test-component.component.html',
   styleUrls: ['./test-component.component.scss'],
 })
-
 export class TestComponentComponent implements OnInit {
   /**
    * variables
@@ -39,14 +38,13 @@ export class TestComponentComponent implements OnInit {
       fullName: [null, [Validators.required], [this.userNameValidator()]],
     });
   }
-  
+
   onSubmit() {
-    
     console.log(this.registrationFControl['fullName'].errors);
   }
 
   //checking the username availability in database
-  // i have used delay function so that our method 
+  // i have used delay function so that our method
   // behave like a HTTP response with delay of at least 1 sec
   checkUserNameExistence(userName: string): Observable<boolean> {
     return of(this.userNames.includes(userName)).pipe(delay(1000));
@@ -64,5 +62,5 @@ export class TestComponentComponent implements OnInit {
   }
 }
 
-// Note: if we are using Service to validate USer Name 
+// Note: if we are using Service to validate USer Name
 //in that case we have to inject it in out components constructor

@@ -12,14 +12,8 @@ export class PetEntryComponent implements OnInit {
   submitted = false;
   petForm!: FormGroup;
 
-  get getPet(){
+  get getPet() {
     return this.petForm['controls'];
-  }
-
-  onSubmit(data: any){
-    this.submitted = true;
-    console.log(this.getPet);
-    console.log(data);
   }
 
   ngOnInit(): void {
@@ -29,5 +23,11 @@ export class PetEntryComponent implements OnInit {
       petBreed: ['', Validators.required],
       petColor: ['', Validators.required],
     });
+  }
+
+  onSubmit(data: any) {
+    this.submitted = true;
+    console.log(this.getPet);
+    console.log(data);
   }
 }
