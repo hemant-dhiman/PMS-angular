@@ -6,13 +6,15 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class LoginGuard implements CanActivate {
   constructor(private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (localStorage.getItem('currentUser')) {
-      return this.router.navigate(['/home'], {
+      return this.router.createUrlTree(['/home'], {
         queryParams: { returnUrl: state.url },
       });
     } else {

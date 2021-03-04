@@ -7,7 +7,7 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
-import { delay, dematerialize, materialize, mergeMap } from 'rxjs/operators';
+import { delay, dematerialize, map, materialize, mergeMap } from 'rxjs/operators';
 import { Users } from '../users/Users';
 
 @Injectable()
@@ -16,8 +16,11 @@ export class BackEnd implements HttpInterceptor {
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
-  ): Observable<HttpEvent<any>> {
+    ): Observable<HttpEvent<any>> {
+    let userNames: string[] = new Array();
+    let userEmails: string[] = new Array();
     let users: Users[] = JSON.parse(localStorage.getItem('users')) || [];
+    
     return of(null)
       .pipe(
         mergeMap(() => {
@@ -53,7 +56,6 @@ export class BackEnd implements HttpInterceptor {
 
           //get all users
           if (request.url.endsWith('/users') && request.method === 'GET') {
-            console.log(request.headers);
             if (
               request.headers.get('Authorization') === 'Bearer 12345-6789-1011'
             ) {
@@ -66,13 +68,49 @@ export class BackEnd implements HttpInterceptor {
             }
           }
 
+          //get All user names
+          if(request.url.endsWith('/user-names') && request.method === 'POST'){
+            let newUser = request.body;
+            //validation
+             let duplicateUser = users.filter((user) => {
+              return user.userName === newUser;
+            }).length;
+
+            if (duplicateUser) {
+              return throwError({
+                error: {
+                  message:
+                    'Username "' + newUser + '" is Already Taken',
+                },
+              });
+            }else{
+              return of(new HttpResponse({status: 200}));
+            }
+        }
+
+          //get All user emails
+          if(request.url.endsWith('/user-emails') && request.method === 'POST'){
+            let newUser = request.body;
+            //validation
+             let duplicateUser = users.filter((user) => {
+              return user.email === newUser;
+            }).length;
+
+            if (duplicateUser) {
+              return throwError({
+                error: {
+                  message:
+                    'Email "' + newUser + '" is Already Taken',
+                },
+              });
+            }else{
+              return of(new HttpResponse({status: 200}));
+            }
+        }
+
           // get user by id
           if (request.url.match(/\/users\/\d+$/) && request.method === 'GET') {
-            console.log(request.params);
-
-            if (
-              request.headers.get('Authorization') === 'Bearer 12345-6789-1011'
-            ) {
+            if (request.headers.get('Authorization') === 'Bearer 12345-6789-1011') {
               let urlParts = request.url.split('/');
               let id = parseInt(urlParts[urlParts.length - 1]);
               let matchedUsers = users.filter((user) => {
@@ -110,9 +148,11 @@ export class BackEnd implements HttpInterceptor {
             }
 
             //else save new user
+
             newUser.id = users.length + 1;
             users.push(newUser);
             localStorage.setItem('users', JSON.stringify(users));
+
             return of(new HttpResponse({ status: 200 }));
           }
 
@@ -124,8 +164,6 @@ export class BackEnd implements HttpInterceptor {
             let newUser = request.body;
             this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
             //newUser.userName = this.currentUser.userName;
-            console.log(newUser);
-            console.log(this.currentUser);
 
             for (let index = 0; index < users.length; index++) {
               const element = users[index];
@@ -137,7 +175,6 @@ export class BackEnd implements HttpInterceptor {
 
             if (this.currentUser.userName === newUser.userName) {
               newUser.id = this.currentUser.id;
-              console.log(newUser);
               localStorage.removeItem('currentUser');
               users.push(newUser);
               localStorage.setItem('users', JSON.stringify(users));

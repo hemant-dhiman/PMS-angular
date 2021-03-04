@@ -24,7 +24,8 @@
   </div>
 </form> -->
 
-<form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+<!-- working form below-->
+<!-- <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
   <div>
     <label>Username: </label>
     <div [ngClass]="{ 'is-loading': registrationFControl['fullName'].pending }">
@@ -49,5 +50,14 @@
   </div>
   <div>
     <button type="submit">Submit</button>
+  </div>
+</form> -->
+
+<form [formGroup]="newUserForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="fullName">
+      Full Name:
+      <input type="text" formControlName="fullName" id="fullName" />
+    </label>
   </div>
 </form>

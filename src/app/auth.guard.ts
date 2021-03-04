@@ -6,7 +6,9 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthGuard implements CanActivate {
   constructor(private router: Router) {}
 
@@ -14,7 +16,7 @@ export class AuthGuard implements CanActivate {
     if (localStorage.getItem('currentUser')) {
       return true;
     }
-    return this.router.navigate(['/login'], {
+    return this.router.createUrlTree(['/login'], {
       queryParams: { returnUrl: state.url },
     });
   }

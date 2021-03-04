@@ -2,14 +2,11 @@ import { Injectable } from '@angular/core';
 import { Users } from './users/Users';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsersService {
-  // private usersUrl = `api/users`;
-  // private loginUrl = `api/login`;
 
   constructor(private http: HttpClient) {}
 
@@ -24,6 +21,15 @@ export class UsersService {
   register(user: Users) {
     //console.log(user);
     return this.http.post(`/users/register`, user);
+  }
+
+  getAllUserNames(userName: string){
+    return this.http.post(`/user-names`, userName);
+  }
+
+  getAllUsersEmails(userEmail: string){
+    return this.http.post(`/user-emails`, userEmail);
+
   }
 
   update(user: Users) {

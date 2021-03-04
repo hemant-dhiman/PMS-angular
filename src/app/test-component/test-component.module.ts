@@ -4,12 +4,8 @@ import { TestComponentComponent } from './test-component.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, RouterOutlet } from '@angular/router';
 
-
-
 @NgModule({
-  declarations: [
-    TestComponentComponent,
-  ],
+  declarations: [TestComponentComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -17,8 +13,8 @@ import { RouterModule, RouterOutlet } from '@angular/router';
       {
         path: '',
         component: TestComponentComponent,
-      }
-    ])
-  ]
+      },
+    ]),
+  ],
 })
-export class TestComponentModule { }
+export class TestComponentModule {}

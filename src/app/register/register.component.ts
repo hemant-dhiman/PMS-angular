@@ -1,10 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import {
+  FormGroup,
+  Validators,
+  FormBuilder,
+  AsyncValidatorFn,
+  AbstractControl,
+  ValidationErrors,
+} from '@angular/forms';
 import { Router } from '@angular/router';
-import { first } from 'rxjs/operators';
 import { UsersService } from '../users.service';
 import { AlertService } from '../alert.service';
 import { Users } from '../users/users';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
@@ -12,6 +19,7 @@ import { Users } from '../users/users';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
+  us: string[];
   data: Users[];
   submitted = false;
   loading = false;
@@ -33,6 +41,12 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    // this.usersService.getAllUserNames('HD123').subscribe(console.log);
+    // this.usersService
+    //   .getAllUsersEmails('HD@datability.co')
+    //   .subscribe(console.log);
+
     this.registerForm = this.formBuilder.group({
       fullName: [
         '',
@@ -58,7 +72,13 @@ export class RegisterComponent implements OnInit {
           Validators.maxLength(20),
         ],
       ],
-      email: ['', [Validators.required, Validators.email]],
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('[\\w\\.-]+@[\\w\\.-]+\\.\\w{2,3}'),
+        ],
+      ],
 
       address: this.formBuilder.group({
         line1: ['', Validators.required],
@@ -96,4 +116,19 @@ export class RegisterComponent implements OnInit {
         );
     }
   }
+
+  // userNameValidator(): AsyncValidatorFn {
+  //   return (control: AbstractControl): Observable<ValidationErrors | null> => {
+  //     let usersNames: string;
+  //      this.usersService.getAllUserNames().subscribe(a=>
+  //       usersNames.push(a));
+  //       return
+  //       .pipe(
+  //       map((response) => {
+  //         return response ? { userName: true } : null;
+  //       })
+  //     );
+  //   )
+  //   };
+  // }
 }

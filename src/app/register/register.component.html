@@ -119,6 +119,9 @@
             <div *ngIf="getUser['email'].hasError('email')">
               Please Enter Proper Email!
             </div>
+            <div *ngIf="getUser['email'].hasError('pattern')">
+              Email must be a valid email address
+            </div>
           </div>
         </label>
       </div>
