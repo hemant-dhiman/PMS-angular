@@ -19,10 +19,7 @@ import { first, map } from 'rxjs/operators';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-  //us: string[];
   data: Users[];
-  submitted = false;
-  loading = false;
   registerForm: FormGroup;
 
   constructor(
@@ -115,7 +112,6 @@ export class RegisterComponent implements OnInit {
           '',
           [
             Validators.required,
-            Validators.maxLength(6),
             Validators.pattern('^[1-9][0-9]{5}$'),
           ],
         ],
@@ -124,8 +120,6 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
-    this.loading = true;
     if (this.registerForm.valid) {
       this.usersService
         .register(this.registerForm.value)
@@ -137,7 +131,6 @@ export class RegisterComponent implements OnInit {
           },
           (err) => {
             this.alertService.error(err);
-            this.loading = false;
           }
         );
     }
@@ -195,6 +188,7 @@ export class RegisterComponent implements OnInit {
       ? 'Password Should be minimum of 25 Characters'
       : '';
   }
+
   emailErrorMessage() {
     return this.email.hasError('required')
       ? 'Email is required!'
@@ -218,15 +212,19 @@ export class RegisterComponent implements OnInit {
   line1ErrorMessage() {
     return this.line1.hasError('required') ? 'Line One required' : '';
   }
+
   line2ErrorMessage() {
     return this.line2.hasError('required') ? 'Line Two required' : '';
   }
+
   districtErrorMessage() {
     return this.district.hasError('required') ? 'District required' : '';
   }
+
   stateErrorMessage() {
     return this.state.hasError('required') ? 'State required' : '';
   }
+
   pincodeErrorMessage() {
     return this.pinCode.hasError('required')
       ? 'Pin Code required'
